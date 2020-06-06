@@ -1,4 +1,13 @@
-Steps to run the Project:
+This is a simple CRUD Application with search functionality as well.
+
+The Project consists of 3 parts:
+1. Client side -> React.JS
+2. Database -> ElasticSearch
+3. API -> Python3-Flask
+
+
+
+The project has been Dokcerised and below are the steps to run the Project:
 
 
 (1) To Build the Docker for the flask server:
