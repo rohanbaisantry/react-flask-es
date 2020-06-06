@@ -91,7 +91,7 @@ class DataTable extends Component {
       <Card>
          <Card.Body className={"empty-container-card"}>
            <Card.Title>No Items Found!</Card.Title>
-           <Card.Subtitle className="mb-2 text-muted">Add or search for a different keyword!</Card.Subtitle>
+           <Card.Subtitle className="mb-2 text-muted">Add items (OR) Search for a different keyword!</Card.Subtitle>
          </Card.Body>
        </Card>
     )
