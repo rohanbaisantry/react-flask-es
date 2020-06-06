@@ -49,6 +49,14 @@ table th, table td { white-space: nowrap; }
 .outer-container {
   padding-top: 20px;
   padding-bottom: 20px;
-  background-repeat: no-repeat;
-  background-position: 50%;
+
+  items-align: center;
+}
+
+.edit-del-action-container {
+  float: right;
+}
+
+.empty-container-card {
+  text-align: center;
 }
