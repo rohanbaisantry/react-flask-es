@@ -31,7 +31,7 @@ Once the dockers are running:
 -> python3
 
 *inside the terminal*
-    import resetdb
+    from __init__ import resetdb
     resetdb()
     exit()
 ```

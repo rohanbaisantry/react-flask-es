@@ -10,7 +10,7 @@ from util_functions import get_pagination_counts, MAX_PER_PAGE
 
 
 app = Flask(__name__)
-es = Elasticsearch(host="0.0.0.0")
+es = Elasticsearch(host="es-db-container")
 
 CORS(app, resources={r"*": {"origins": "*"}}, supports_credentials=True)
 
@@ -55,7 +55,7 @@ def insert_data():
         except Exception as e:
             app.logger.info('ERROR', e)
             res = default_res_from_es
-        count = res['hits']['total']
+        count = res['hits']['total']['value']
         pagination_counts = get_pagination_counts(count)
         retval = {
             "item": item,
@@ -93,7 +93,6 @@ def search():
 
 
 def resetdb():
-    es = Elasticsearch(host="0.0.0.0")
     if not es.indices.exists(index="contents"):
         es.indices.create(index='contents')
     body = {

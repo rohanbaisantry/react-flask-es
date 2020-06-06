@@ -61,7 +61,6 @@ def get_data_to_insert_from_request(request):
 def get_query(keyword, page):
     max_per_page, offset = 10, 0
     offset = max_per_page * int(page-1)
-    keyword = keyword or ''
     query = "*%s*" % keyword
     body = {
         "query": {
@@ -103,7 +102,7 @@ def get_pagination_counts(count, max_size_per_page=MAX_PER_PAGE):
 
 def get_retval(res):
     items = res['hits']['hits']
-    count = res['hits']['total']
+    count = res['hits']['total']['value']
     pagination_counts = get_pagination_counts(count)
     retval = {
         "pagination_counts": pagination_counts
