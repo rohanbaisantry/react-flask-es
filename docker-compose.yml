@@ -1,0 +1,38 @@
+version: '3'
+services:
+  db:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
+    container_name: es-db-container
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - cluster.initial_master_nodes=es01
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data01:/usr/share/elasticsearch/data
+
+  web:
+    container_name: grayquest-server
+    image: 'qrayquest-server:latest'
+    ports:
+      - "5001:5001"
+    depends_on:
+      - db
+
+  client:
+    container_name: grayquest-client
+    image: 'grayquest-client:latest'
+    ports:
+      - "8000:80"
+    depends_on:
+      - db
+      - web
+
+volumes:
+  data01:
+    driver: local

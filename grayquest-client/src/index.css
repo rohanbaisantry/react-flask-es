@@ -1,0 +1,54 @@
+table th, table td { white-space: nowrap; }
+
+.search-bar {
+ margin: 20px;
+ width: 350px;
+ margin-left: 0px;
+ border-radius: 20px;
+ padding: 5px;
+ border: 1px solid #6c757d;
+}
+
+.app-title {
+ font-weight: 800;
+ margin: 20px;
+ color: #3e52ce;
+ font-size: 30px;
+}
+
+.search-select {
+  margin: 20px;
+  padding: .375rem .75rem;
+  color: white;
+  background-color: #6c757d;
+  border-color: #6c757d;
+  margin-right: 30px;
+  margin-left: 10px;
+  .search-filter-option {
+    font-weight: bold;
+    color: white;
+  }
+}
+
+.action-buttons-bottom-row {
+  margin: 20px;
+}
+
+.row-actions-container {
+  margin-top: 10px;
+}
+
+.search-container {
+  margin-left: 15px;
+}
+
+.search-inner-container {
+  display: inline-block;
+}
+
+.outer-container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
