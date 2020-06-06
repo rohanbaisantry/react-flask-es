@@ -34,7 +34,7 @@ class DataTable extends Component {
 
   renderCard(item) {
     return (
-      <Card key={item.id}>
+      <Card key={item.id} className={"inner-card"}>
         <Card.Body>
           <Card.Title>
             {item.name}
@@ -44,24 +44,25 @@ class DataTable extends Component {
             </div>
           </Card.Title>
           <Card.Subtitle className="mb-2 text-muted">Main URL: {item.main_url}</Card.Subtitle>
-          <Card.Subtitle className="mb-2 text-muted">Limit: {item.main_url}</Card.Subtitle>
+          <Card.Subtitle className="mb-2 text-muted">Limit: {item.limit}</Card.Subtitle>
           <br/>
           <Card.Subtitle className="mb-2 text-muted">Scraped Data:</Card.Subtitle>
           <ListGroup variant="flush">
-          <ListGroup.Item />
             {
-              item.scraped_data.map((_data) => {
-                return (
-                  <ListGroup.Item key={_data.web_page}>
-                    <div>
-                      <label> web_page: </label> <span>{ _data.web_page }</span> <br/>
-                      <label> og_image: </label> <span>{ _data.og_image }</span> <br/>
-                      <label> og_title: </label> <span>{ _data.og_title }</span> <br/>
-                      <label> og_description: </label> <span>{ _data.og_description }</span>
-                    </div>
-                  </ListGroup.Item>
-                )
-              })
+              item.scraped_data.length > 0 ? (
+                item.scraped_data.map((_data) => {
+                  return (
+                    <ListGroup.Item key={_data.web_page}>
+                      <div className={"scraped-data-inner-container"}>
+                        <label class> URL: </label> <span>{ _data.web_page }</span> <br/>
+                        <label> OG Image: </label> <span>{ _data.og_image }</span> <br/>
+                        <label> OG Title: </label> <span>{ _data.og_title }</span> <br/>
+                        <label> OG Description: </label> <span>{ _data.og_description }</span> <br/>
+                      </div>
+                    </ListGroup.Item>
+                  )
+                })
+              ) : (<label>Could not find any urls which have "noopener" in their rel.</label>)
             }
           </ListGroup>
           </Card.Body>

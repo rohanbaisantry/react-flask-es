@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   resetPageCount() {
-    document.getElementById('search_pagination').value = '1';
+    document.getElementById('search_pagination').value = 1;
   }
 
   getFilteredItems() {
@@ -75,6 +75,7 @@ class App extends Component {
     else {
       setTimeout(function(){
         document.getElementById('search_pagination').value = 1;
+        document.getElementById('search_keyword').value = '';
         this.getItems();
       }
       .bind(this),

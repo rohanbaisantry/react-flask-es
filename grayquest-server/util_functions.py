@@ -25,7 +25,7 @@ def get_websites_to_scrape(main_url, limit):
     web_page = requests.get(main_url).content
     soup = BeautifulSoup(web_page, "html.parser")
     a_tags = soup.find_all('a', href=True)
-    a_tags_to_search_from = list(filter(lambda a: a.get("rel") == ["noopener"], a_tags))
+    a_tags_to_search_from = list(filter(lambda a: "noopener" in a.get("rel", []), a_tags))
     if len(a_tags_to_search_from) >= limit:
         a_tags_to_search_from = a_tags_to_search_from[:limit]
     web_sites_to_scrape = ["https:%s" % a['href'] for a in a_tags_to_search_from]

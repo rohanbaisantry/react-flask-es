@@ -31,7 +31,7 @@ table th, table td { white-space: nowrap; }
 }
 
 .action-buttons-bottom-row {
-  margin: 20px;
+  margin-left: 0px !important;
 }
 
 .row-actions-container {
@@ -59,4 +59,16 @@ table th, table td { white-space: nowrap; }
 
 .empty-container-card {
   text-align: center;
+}
+
+.scraped-data-inner-container {
+  display: list-item;
+  font-size: small;
+}
+.scraped-data-inner-container > label {
+    font-weight: bold;
+}
+
+.inner-card {
+  margin: 10px;
 }
