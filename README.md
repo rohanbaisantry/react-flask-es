@@ -52,6 +52,5 @@ In case there are nginX issues, just delete the "nginx.conf" file and remove lin
 in the "grayquest-client" folder. 
 
 (3)
-Any changes to the files and you will have to redo the entire process to have the changes 
-reflected.
+If any changes are made to the files you will have to redo the entire process of building to have the changes reflected.
 ```
