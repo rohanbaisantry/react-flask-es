@@ -92,6 +92,19 @@ def search():
     return jsonify(retval)
 
 
+def resetdb():
+    es = Elasticsearch(host="0.0.0.0")
+    if not es.indices.exists(index="contents"):
+        es.indices.create(index='contents')
+    body = {
+        "query": {
+            "match_all": {}
+        }
+    }
+    es.delete_by_query(index='contents', doc_type='title', body=body)
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5001, debug=True)
+
 

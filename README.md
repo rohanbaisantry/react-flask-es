@@ -31,11 +31,9 @@ Once the dockers are running:
 -> python3
 
 *inside the terminal*
-import elasticsearch
-es = elasticsearch.Elasticsearch(host="es-db-container")
-if not es.indices.exists(index="contents"):
-    es.indices.create(index='contents')
-exit()
+    import resetdb
+    resetdb()
+    exit()
 ```
 
 (7) To view the Output goto "http://localhost:8000/" in your browser.
