@@ -11,6 +11,7 @@ class App extends Component {
     this.state = {
       items: [],
       pageCounts: [],
+      showScrapedData: []
     }
     this.getFilteredItems = this.getFilteredItems.bind(this)
     this.resetPageCount = this.resetPageCount.bind(this)
@@ -24,6 +25,7 @@ class App extends Component {
         var pageCounts = data.pagination_counts;
         if(Array.isArray(items)) {
           this.setState({items, pageCounts})
+          this.setShowScrapedDataList();
         }
       })
       .catch(err => console.log(err))
@@ -31,6 +33,17 @@ class App extends Component {
 
   resetPageCount() {
     document.getElementById('search_pagination').value = 1;
+  }
+
+  setShowScrapedDataList(){
+    var showScrapedData = new Array(this.state.items.length).fill(false);
+    this.setState({ showScrapedData })
+  }
+
+  toggleShowScrapedData(index){
+    var showScrapedData = this.state.showScrapedData;
+    showScrapedData[index] = !showScrapedData[index];
+    this.setState({ showScrapedData });
   }
 
   getFilteredItems() {
@@ -46,7 +59,8 @@ class App extends Component {
         var items = data.items;
         var pageCounts = data.pagination_counts;
         if(Array.isArray(items)) {
-          this.setState({items, pageCounts})
+          this.setState({items, pageCounts});
+          this.setShowScrapedDataList();
         }
       })
       .catch(err => console.log(err))
@@ -57,6 +71,7 @@ class App extends Component {
       items: [...prevState.items, item],
       pageCounts: pageCounts
     }));
+    this.setShowScrapedDataList();
   }
 
   updateState = (item) => {
@@ -88,6 +103,7 @@ class App extends Component {
   }
 
   render() {
+  console.log(this.state.showScrapedData)
     return (
       <Container className="App outer-container">
         <Row>
@@ -111,7 +127,13 @@ class App extends Component {
         </Row>
         <Row>
           <Col>
-            <DataTable items={this.state.items} updateState={this.updateState} deleteItemFromState={this.deleteItemFromState} />
+            <DataTable
+              items={this.state.items}
+              updateState={this.updateState}
+              deleteItemFromState={this.deleteItemFromState}
+              showScrapedData={this.state.showScrapedData}
+              toggleShowScrapedData={this.toggleShowScrapedData.bind(this)}
+            />
           </Col>
         </Row>
         <Row className="action-buttons-bottom-row">
