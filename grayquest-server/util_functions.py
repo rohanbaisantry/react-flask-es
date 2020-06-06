@@ -59,7 +59,7 @@ def get_data_to_insert_from_request(request):
 
 
 def get_query(keyword, page):
-    max_per_page, offset = 10, 0
+    max_per_page, offset = MAX_PER_PAGE, 0
     offset = max_per_page * int(page-1)
     query = "*%s*" % keyword
     body = {
