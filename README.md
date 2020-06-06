@@ -1,4 +1,4 @@
-This is a simple CRUD Application with search functionality as well.
+This is a simple CRUD Application with search and pagination functionality as well.
 
 The Project consists of 3 parts:
 1. Client side -> React.JS
