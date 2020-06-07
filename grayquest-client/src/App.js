@@ -4,6 +4,7 @@ import ModalForm from './Components/Modals/Modal'
 import DataTable from './Components/Tables/DataTable'
 import { CSVLink } from "react-csv"
 import { Button } from 'reactstrap';
+import Autosuggest from 'react-autosuggest';
 
 class App extends Component {
     constructor(props) {
@@ -11,7 +12,10 @@ class App extends Component {
     this.state = {
       items: [],
       pageCounts: [],
-      showScrapedData: []
+      showScrapedData: [],
+      suggestions: [],
+      value: '',
+      autoSuggestionsList: []
     }
     this.getFilteredItems = this.getFilteredItems.bind(this)
     this.resetPageCount = this.resetPageCount.bind(this)
@@ -26,6 +30,7 @@ class App extends Component {
         if(Array.isArray(items)) {
           this.setState({items, pageCounts})
           this.setShowScrapedDataList();
+          this.setAutoSuggestionsList();
         }
       })
       .catch(err => console.log(err))
@@ -40,6 +45,19 @@ class App extends Component {
     this.setState({ showScrapedData })
   }
 
+  setAutoSuggestionsList(){
+    var autoSuggestionsList = [];
+    for(var i=0; i< this.state.items.length; i ++) {
+      autoSuggestionsList.push({
+        name: this.state.items[i].name
+      })
+      autoSuggestionsList.push({
+        name: this.state.items[i].main_url
+      })
+    }
+    this.setState({ autoSuggestionsList })
+  }
+
   toggleShowScrapedData(index){
     var showScrapedData = this.state.showScrapedData;
     showScrapedData[index] = !showScrapedData[index];
@@ -48,7 +66,7 @@ class App extends Component {
 
   getFilteredItems() {
     var baseUrl = 'http://0.0.0.0:5001/search?';
-    var keyword = document.getElementById('search_keyword').value;
+    var keyword = this.state.value;
     if (keyword.length > 0) { baseUrl += "keyword=" + keyword}
     var pageCount = document.getElementById('search_pagination').value;
     if(keyword) { baseUrl += "&"; }
@@ -61,6 +79,7 @@ class App extends Component {
         if(Array.isArray(items)) {
           this.setState({items, pageCounts});
           this.setShowScrapedDataList();
+          this.setAutoSuggestionsList();
         }
       })
       .catch(err => console.log(err))
@@ -72,6 +91,7 @@ class App extends Component {
       pageCounts: pageCounts
     }));
     this.setShowScrapedDataList();
+    this.setAutoSuggestionsList();
   }
 
   updateState = (item) => {
@@ -82,6 +102,7 @@ class App extends Component {
       ...this.state.items.slice(itemIndex + 1)
     ]
     this.setState({ items });
+    this.setAutoSuggestionsList();
   }
 
   deleteItemFromState = (id) => {
@@ -90,8 +111,9 @@ class App extends Component {
     else {
       setTimeout(function(){
         document.getElementById('search_pagination').value = 1;
-        document.getElementById('search_keyword').value = '';
+        this.setState({value: ''})
         this.getItems();
+        this.setAutoSuggestionsList();
       }
       .bind(this),
       2000);
@@ -102,8 +124,50 @@ class App extends Component {
     this.getItems();
   }
 
+  getSuggestions(value) {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+
+    return inputLength === 0 ? [] : this.state.autoSuggestionsList.filter(autoSuggestion =>
+      autoSuggestion.name.toLowerCase().slice(0, inputLength) === inputValue
+    );
+  };
+
+  getSuggestionValue(suggestion) { return suggestion.name };
+
+  renderSuggestion(suggestion) {
+    return (
+      <div className="suggestion-text">
+        {suggestion.name}
+      </div>
+    )
+  };
+
+  onChange = (event, { newValue }) => {
+    this.setState({
+      value: newValue
+    });
+  };
+
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      suggestions: this.getSuggestions(value)
+    });
+  };
+
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: []
+    });
+  };
+
+
   render() {
-  console.log(this.state.showScrapedData)
+    var inputProps = {
+      placeholder: 'search by name or main url..',
+      value: this.state.value,
+      onChange: this.onChange
+    };
     return (
       <Container className="App outer-container">
         <Row>
@@ -113,7 +177,14 @@ class App extends Component {
         </Row>
         <Row>
           <Col className="search-container">
-            <input type="text" id="search_keyword" className="search-bar" placeholder="search by name or main url.." onChange= {this.resetPageCount}/>
+            <Autosuggest
+              suggestions={this.state.suggestions}
+              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+              getSuggestionValue={this.getSuggestionValue}
+              renderSuggestion={this.renderSuggestion}
+              inputProps={inputProps}
+            />
             <div className="search-inner-container">
               <label htmlFor="search_pagination"> Page: </label>
               <select id="search_pagination" className="search-select" name="search_pagination">

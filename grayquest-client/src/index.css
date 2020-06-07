@@ -1,6 +1,6 @@
 table th, table td { white-space: nowrap; }
 
-.search-bar {
+.react-autosuggest__input {
  margin: 20px;
  width: 350px;
  margin-left: 0px;
@@ -39,7 +39,7 @@ table th, table td { white-space: nowrap; }
 }
 
 .search-container {
-  margin-left: 15px;
+  margin-left: 15px !important;
 }
 
 .search-inner-container {
@@ -77,4 +77,8 @@ table th, table td { white-space: nowrap; }
   float: right;
   height: 10px;
   width: 20px;
+}
+
+.suggestion-text {
+  font-weight: bold;
 }
