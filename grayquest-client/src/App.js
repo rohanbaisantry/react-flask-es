@@ -147,6 +147,7 @@ class App extends Component {
     this.setState({
       value: newValue
     });
+    this.resetPageCount();
   };
 
   onSuggestionsFetchRequested = ({ value }) => {
