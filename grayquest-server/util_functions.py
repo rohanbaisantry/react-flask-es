@@ -3,7 +3,7 @@ import json
 import requests
 from bs4 import BeautifulSoup
 
-MAX_PER_PAGE = 10
+MAX_PER_PAGE = 3
 
 
 def get_og_data(url):

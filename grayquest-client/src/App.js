@@ -129,7 +129,7 @@ class App extends Component {
     const inputLength = inputValue.length;
 
     return inputLength === 0 ? [] : this.state.autoSuggestionsList.filter(autoSuggestion =>
-      autoSuggestion.name.toLowerCase().slice(0, inputLength) === inputValue
+      autoSuggestion.name.toLowerCase().includes(inputValue)
     );
   };
 
