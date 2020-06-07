@@ -28,6 +28,10 @@ def get_websites_to_scrape(main_url, limit):
     a_tags_to_search_from = list(filter(lambda a: "noopener" in a.get("rel", []), a_tags))
     if len(a_tags_to_search_from) >= limit:
         a_tags_to_search_from = a_tags_to_search_from[:limit]
+    else:
+        a_tags_to_search_from = a_tags
+        if len(a_tags_to_search_from) >= limit:
+            a_tags_to_search_from = a_tags_to_search_from[:limit]
     web_sites_to_scrape = ["https:%s" % a['href'] for a in a_tags_to_search_from]
     return web_sites_to_scrape
 
